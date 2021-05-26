@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang='en'>
+    <head>
+        <meta charset='utf-8'>
+        <meta property='og:title' content='My Frustrations With Electron and Webpack' />
+        <meta property="og:site_name" content="Lizzy's Blog" />
+
+        
+        <meta name='description' content='<p>So, a while back, I created a moderately popular app called MyRPC. (It’s dead now) Essentially, it was a custom status application for Discord based on the RPC function of Discord. At the time of its creation, my knowledge was mostly of Node.js, so I opted to use Electron. The earliest versions of the code worked spectacularly, and the app was a  hit. However, I learned React at some point, and decided that MyRPC could use a touch of React. Bearing in mind that <code class="language-plaintext highlighter-rouge">create-react-app</code> was essentially the only way to do React at the time (unless you wanted to configure everything manually), I opted to use it.</p>
+' />
+        <meta property='og:description' content='<p>So, a while back, I created a moderately popular app called MyRPC. (It’s dead now) Essentially, it was a custom status application for Discord based on the RPC function of Discord. At the time of its creation, my knowledge was mostly of Node.js, so I opted to use Electron. The earliest versions of the code worked spectacularly, and the app was a  hit. However, I learned React at some point, and decided that MyRPC could use a touch of React. Bearing in mind that <code class="language-plaintext highlighter-rouge">create-react-app</code> was essentially the only way to do React at the time (unless you wanted to configure everything manually), I opted to use it.</p>
+' />
+
+        
+        <link rel='canonical' href='https://lizainslie.dev/2021/01/07/electron-webpack-frustrations/' />
+        <meta property='og:url' content='https://lizainslie.dev/2021/01/07/electron-webpack-frustrations/' />
+
+        
+            <meta property='twitter:creator' content='@LizzyReborn' />
+            <meta property='twitter:site' content='@LizzyReborn' />
+        
+
+        
+            <meta property='og:type' content='article' />
+            <meta property='article:published_time' content='2021-01-07T00:00:00+00:00' />
+        
+
+        <title>My Frustrations With Electron and Webpack - Lizzy's Blog</title>
+
+        <link rel='stylesheet' type='text/css' href='/assets/css/style.css'>
+    </head>
+    <body>
+        <header id='header' class='page_header'>
+    <h1><a class='no_underline' href='/'>Lizzy's Blog</a></h1>
+
+    <a class='top_right' href='/about'>About Me</a>
+</header>
+<div id='content'>
+    <div class='page_container grid'>
+    <div class='page_content'>
+        <article class='card'>
+    <div class='content'>
+        <h1>My Frustrations With Electron and Webpack</h1>
+        <p>So, a while back, I created a moderately popular app called MyRPC. (It’s dead now) Essentially, it was a custom status application for Discord based on the RPC function of Discord. At the time of its creation, my knowledge was mostly of Node.js, so I opted to use Electron. The earliest versions of the code worked spectacularly, and the app was a  hit. However, I learned React at some point, and decided that MyRPC could use a touch of React. Bearing in mind that <code class="language-plaintext highlighter-rouge">create-react-app</code> was essentially the only way to do React at the time (unless you wanted to configure everything manually), I opted to use it.</p>
+
+<p>All was well, until I ran into some issues. (classic Node.js fairy-tale, right?) The Discord RPC worked fine, however what really hurt was the build process. I wanted to have cross-platform builds without having to know someone with a Mac and someone with a Linux installation, so I setup Travis CI and AppVeyor (for Windows because Travis CI’s Windows support was sketchy at best). Here’s where it got murky (and it’s also why I keep my distance from most CI/CD pipelines). I wanted to do a few things with CI:</p>
+
+<ol>
+  <li><strong>Build an installer for each platform.</strong> This wasn’t too big of a problem after I got the build scripts fine-tuned.</li>
+  <li><strong>Create and tag a GitHub release on __tagged commits only__.</strong> It wasn’t too difficult to do this either. The hard parts were:
+    <ul>
+      <li><strong>Determining whether or not the commit was tagged.</strong> Git isn’t too nice about this. <em>Something, something, platform specific string parsing…</em></li>
+      <li><strong>Creating only one release.</strong> Travis and AppVeyor each had a different idea of how to generate a release name. And even if the names were the same, I still had problems getting AppVeyor to simply update the release if it already existed rather than just failing the job.</li>
+    </ul>
+  </li>
+  <li><strong>Upload the built installers to the new release.</strong> TL;DR, directory structures suck.</li>
+  <li><strong>Use the tagged commit’s message as the release description.</strong> Simply put, you should <strong><em>never</em></strong> attempt this. You will, by every guarantee, spend hours on end trying to get it to work properly and never succeed. Good luck.</li>
+</ol>
+
+<h3 id="tldr">TL;DR</h3>
+<p>My frustration was mostly with the process. Between these steps, I was losing my mind:</p>
+
+<ol>
+  <li>Compile the UI with Webpack. Hope and pray to our lord and savior Satan that the Electron renderer module is accessible to the UI code.</li>
+  <li>Run the Electron app. Hope that it can find the Webpack output, and if it can’t, start packing your bags for Brazil.</li>
+  <li>If all of the above works… well, here comes the fun part. Commit all your changes, tag the latest commit (if it’s a release), and push that code.</li>
+  <li>Go fix the 1,000 issues that Travis CI and AppVeyor have when trying to build the app, and make damn sure they upload the installers to the same release.</li>
+  <li>Describe the release, because no matter how hard you try you can never seem to get Travis to pull the commit content and put it in the release description.</li>
+</ol>
+
+<p>This should not have been so difficult, but alas: Electron.</p>
+
+    </div>
+</article>
+    </div>
+
+    <aside class='sidebar card'>
+        <div class='content'>
+            <h3><a class='no_underline' href='/about'>About Me</a></h3>
+            <p>Welcome to my little corner of the internet! Here, I write about whatever I feel like writing. I mostly enjoy writing about tech, humor, and music, but I try not to limit myself to just a few things. I am transgender (MTF), and 18 years of age.</p>
+            <hr />
+
+            <a href='/about'>Read more...</a>
+        </div>
+    </aside>
+</div>
+</div>
+<footer class='footer' id='footer'>
+    <p><strong>&copy; 2021</strong> Liz Ainslie</p>
+</footer>
+    </body>
+</html>
