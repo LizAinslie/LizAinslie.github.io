@@ -11,6 +11,7 @@ class BaseDocument extends Document {
       <Html>
         <Head>
           <meta charSet='utf-8' />
+          <link rel='shortcut icon' href='/pfp.png' />
         </Head>
         <body>
           <Main />
