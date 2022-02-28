@@ -22,7 +22,7 @@ export default function Home() {
                   &#x1F3F3;&#xFE0F;&#x200D;&#x26A7;&#xFE0F; she/her
                 </span>
               </div>
-              <p className='text-lg ml-0 lg:ml-2 mt-2'>I&apos;m an 18-year-old psychobitch that likes to code things, <br className='hidden lg:inline' />play games,
+              <p className='text-lg ml-0 lg:ml-2 mt-2'>I&apos;m an 18-year-old that likes to code things, <br className='hidden lg:inline' />play games,
                 and make music.</p>
             </article>
           </section>
